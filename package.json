@@ -2,7 +2,7 @@
   "name": "ip_uptime_scanner",
   "version": "1.0.0",
   "description": "A scanner to periodically ping IP addresses and store the datd for projects such as the power map project.",
-  "main": "index.js",
+  "main": "src/app.js",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1"
   },
@@ -23,5 +23,8 @@
   "bugs": {
     "url": "https://github.com/MahmoudThePeltist/ipuptimescanner/issues"
   },
-  "homepage": "https://github.com/MahmoudThePeltist/ipuptimescanner#readme"
+  "homepage": "https://github.com/MahmoudThePeltist/ipuptimescanner#readme",
+  "dependencies": {
+    "express": "^4.17.1"
+  }
 }
