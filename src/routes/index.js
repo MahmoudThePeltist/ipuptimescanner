@@ -1,12 +1,13 @@
-var express = require('express');
+const express = require('express');
 var router = express.Router();
 
-router.get('/', (req, res) => {
-    res.send("Testing Main Route");
-})
-
-router.get('/yup', (req, res) => {
-    res.send("Testing Second Route");
-})
+router.get('/routes', (req, res) => {
+    res.send({
+        1: 'GET /api/routes',
+        2: 'GET /api/clients',
+        3: 'GET /api/clients/:id',
+        4: 'POST /api/clients'
+    });
+});
 
 module.exports = router;
