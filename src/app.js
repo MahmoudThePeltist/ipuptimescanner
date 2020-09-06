@@ -1,26 +1,21 @@
 const express = require('express');
-const knex = require('knex');
 const port = 3000;
 
 const app = express();
-const knexCon = knex({
-    client: 'mysql2',
-    debug: true,
-    connection: {
-        host: '127.0.0.1',
-        user: 'root',
-        password: '',
-        database: 'ip_uptime_scanner'
-    }
-})
 
 const indexRouter = require('./routes/index.js');
+const clientsRouter = require('./routes/clients.js');
 
-// clients = knexCon('clients').unionAll();
-// console.log('clients: ', clients);
+app.use(express.json());
 
-app.use('/', indexRouter);
+app.use('/api/', indexRouter);
+app.use('/api/clients/', clientsRouter);
+
+// app.use((req, res, error, next) => {
+//     // next(createError(404));
+//     res.send("404");
+// })
 
 app.listen(port, () => {
-    console.log(`Test app listening on http://localhost:${port}`);
+    console.log(`IPUPTIMESCANNER is active on http://localhost:${port}`);
 })
