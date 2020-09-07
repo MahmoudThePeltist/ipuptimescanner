@@ -10,7 +10,9 @@ module.exports = {
   // },
   development: {
     client: 'mysql2',
+    debug: true,
     connection: {
+      host: '127.0.0.1',
       database: 'ip_uptime_scanner',
       user:     'root',
       password: ''
