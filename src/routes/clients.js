@@ -1,7 +1,7 @@
 const express = require('express');
 var router = express.Router();
 
-var knex = require('../knexConnection');
+var knex = require('../services/knexConnection');
 
 router.get('/', (req, res) => {
     knex('clients')
@@ -21,11 +21,15 @@ router.get('/:id', (req, res) => {
 });
 
 router.post('/', (req, res) => {
+    console.log(req.body);
+
     client_to_insert = {
+        name: req.body.name,
         address: req.body.address,
         status: req.body.status,
         type: req.body.type,
         attributes: JSON.stringify(req.body.attributes),
+        description: req.body.description,
     };
     
     console.log(req.body, client_to_insert);
