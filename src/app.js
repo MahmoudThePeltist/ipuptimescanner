@@ -1,10 +1,13 @@
 const express = require('express');
 const port = 3000;
 
-const app = express();
+const app = express(); 
 
 const indexRouter = require('./routes/index.js');
 const clientsRouter = require('./routes/clients.js');
+
+const cron = require('./services/cronPing');
+cron;
 
 app.use(express.json());
 
