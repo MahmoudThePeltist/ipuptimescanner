@@ -6,7 +6,7 @@ exports.up = function(knex) {
             table.integer('id');
             table.string('address', 1000).notNullable();
             table.string('status', 1000).notNullable();
-            table.timestamps();
+            table.timestamps(false, true);
         });
 };
 

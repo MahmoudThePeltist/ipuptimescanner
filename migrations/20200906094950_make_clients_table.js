@@ -9,7 +9,7 @@ exports.up = function(knex) {
             table.string('attributes', 1000).notNullable();
             table.string('status', 1000).defaultTo('unchecked');
             table.text('description');
-            table.timestamps();
+            table.timestamps(false, true);
         });
 };
 
