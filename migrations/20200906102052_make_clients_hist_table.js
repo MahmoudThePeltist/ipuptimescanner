@@ -2,12 +2,10 @@
 exports.up = function(knex) {
     return knex.schema
         .createTable('clients_hist', table => {
-            table.increments('hist_id');
+            table.increments('hist_id').primary();
             table.integer('id');
             table.string('address', 1000).notNullable();
-            table.string('type', 255).notNullable();
-            table.string('attributes', 1000).notNullable();
-            table.boolean('status').notNullable();
+            table.string('status', 1000).notNullable();
             table.timestamps();
         });
 };
