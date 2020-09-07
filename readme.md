@@ -7,6 +7,8 @@ A Small tool to periodically ping IP addresses to check uptime.
  * store historical outage/downtime data.
 
 # deployment
- * MySQL database
-
-`knex migrate:latest`
+ * Developed using MySQL database
+ * Configure the database in the knexfile.js
+ * Select the development/production object in knexConnection.js
+ * Migrate using `knex migrate:latest`
+ * Rollback migrations using `knex migrate:rollback -all`
