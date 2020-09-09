@@ -25,6 +25,7 @@
   },
   "homepage": "https://github.com/MahmoudThePeltist/ipuptimescanner#readme",
   "dependencies": {
+    "cors": "^2.8.5",
     "express": "^4.17.1",
     "knex": "^0.21.5",
     "mysql2": "^2.1.0",

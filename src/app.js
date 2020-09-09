@@ -1,5 +1,6 @@
 const express = require('express');
-const port = 3000;
+const cors = require('cors');
+const port = 3500;
 
 const app = express(); 
 
@@ -10,6 +11,7 @@ const clientsHistoryRouter = require('./routes/clients_history.js');
 const cron = require('./services/cronPing');
 cron;
 
+app.use(cors());
 app.use(express.json());
 
 app.use('/api/', indexRouter);
