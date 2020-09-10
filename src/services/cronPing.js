@@ -1,59 +1,49 @@
 const knex = require('./knexConnection');
+const { performance } = require('perf_hooks');
 const cron = require('node-cron');
-const http = require('http');
+const ping = require('ping');
 
-cron.schedule('* * * * *', () => {
-    console.log("This is a cron job running on the server.");
+cron.schedule('*/10 * * * * *', () => { pingAndUpdateClients(); });
+
+function pingAndUpdateClients() {
+
+    time1 = performance.now();
     knex('clients')
         .then(rows => {
-            console.log("Getting clients: " + rows.length);
-            rows.forEach(client => {
-                console.log("Pinging client: " + client.address);
-
-                options = {
-                    host: client.address,
-                }
+            rows.forEach((client) => {
 
                 // check if the client is up or down and set their status if they've changed
-                var req = http.get(options, res => {
-                    if(client.status != 'up'){
-                        console.log("Client " + client.address + " Is back up!");
-                        knex('clients').where({id: client.id}).update({status: 'up', updated_at: knex.fn.now()})
-                            .then(res => {
-                                // save to history log
-                                client_history = {
-                                    'id': client.id,
-                                    'address': client.address,
-                                    'status': client.address
-                                }
-                                knex('clients_hist').insert(client_history)
-                                    .then(res => {})
-                            });
-                        } else {
-                            console.log("Client " + client.address + " Is still up.");
+                ping.sys.probe(client.address, isAlive => {
+                    if(isAlive){
+                        if(client.status != 'up') {
+                            updateClientStatus(client, 'up');
                         }
-                })
-
-                req.on('error', error => {
-                    if(client.status != 'down'){
-                        console.log("Client " + client.address + " Is down!: "+ JSON.stringify(error));
-                        knex('clients').where({id: client.id}).update({status: 'down', updated_at: knex.fn.now()})
-                            .then(res => {
-                                // save to history log
-                                client_history = {
-                                    'id': client.id,
-                                    'address': client.address,
-                                    'status': client.address
-                                }
-                                knex('clients_hist').insert(client_history)
-                                    .then(res => {})
-                            });
-                        } else {
-                            console.log("Client " + client.address + " Is still down. "+ JSON.stringify(error));
+                        
+                    } else {
+                        if(client.status != 'down') {
+                            updateClientStatus(client, 'down');
                         }
+    
+                        console.log(performance.now() - time1);
+                    }
                 })
             })
         })
-});
+}
+
+function updateClientStatus(client, new_status) {
+    
+    knex('clients').where({id: client.id}).update({status: new_status, updated_at: knex.fn.now()})
+    .then(res => {
+        // save to history log
+        client_history = {
+            'id': client.id,
+            'address': client.address,
+            'status': client.address
+        }
+        knex('clients_hist').insert(client_history)
+            .then(res => {})
+    });
+}
 
 module.exports = cron;
