@@ -10,7 +10,7 @@ function pingAndUpdateClients() {
     time1 = performance.now();
     knex('clients')
         .then(rows => {
-            rows.forEach((client) => {
+            rows.forEach((client, index) => {
 
                 // check if the client is up or down and set their status if they've changed
                 ping.sys.probe(client.address, isAlive => {
@@ -23,9 +23,12 @@ function pingAndUpdateClients() {
                         if(client.status != 'down') {
                             updateClientStatus(client, 'down');
                         }
-    
+
                         console.log(performance.now() - time1);
                     }
+
+                    // console.log(index, " - id: ", client.id, ' stat: ', client.status, ' pref: ', performance.now() - time1);
+
                 })
             })
         })
