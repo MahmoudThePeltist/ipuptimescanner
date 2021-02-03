@@ -11,7 +11,7 @@ exports.getSpecific = (req, res) => {
 };
 
 exports.create = (req, res) => {
-  client_to_insert = {
+  data_to_insert = {
     name: req.body.name,
     address: req.body.address,
     type: req.body.type,
@@ -20,12 +20,16 @@ exports.create = (req, res) => {
   };
 
   knex("clients")
-    .insert(client_to_insert)
-    .then((data) => res.status(200).json(data));
+    .insert(data_to_insert)
+    .then((inserted_id) => {
+      knex("clients")
+        .where("id", inserted_id)
+        .then((rows) => res.status(200).json(rows));
+    });
 };
 
 exports.put = (req, res) => {
-  client_to_update = {
+  data_to_update = {
     name: req.body.name,
     address: req.body.address,
     type: req.body.type,
@@ -35,8 +39,12 @@ exports.put = (req, res) => {
 
   knex("clients")
     .where("id", req.params.id)
-    .update(client_to_update)
-    .then((data) => res.status(200).json(data));
+    .update(data_to_update)
+    .then((inserted_id) => {
+      knex("clients")
+        .where("id", inserted_id)
+        .then((rows) => res.status(200).json(rows));
+    });
 };
 
 exports.delete = (req, res) => {
