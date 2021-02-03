@@ -7,6 +7,7 @@ const app = express();
 const generalRouter = require('./routes/general.routes.js');
 const clientsRouter = require('./routes/clients.routes.js');
 const historyRouter = require('./routes/history.routes.js');
+const usersRouter = require('./routes/users.routes.js');
 
 const cron = require('./services/cronPing');
 cron;
@@ -17,6 +18,7 @@ app.use(express.json());
 app.use('/api/', generalRouter);
 app.use('/api/clients/', clientsRouter);
 app.use('/api/history/', historyRouter);
+app.use('/api/users/', usersRouter);
 
 // app.use((req, res, error, next) => {
 //     // next(createError(404));
