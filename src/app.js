@@ -4,9 +4,9 @@ const port = 3500;
 
 const app = express(); 
 
-const indexRouter = require('./routes/index.js');
-const clientsRouter = require('./routes/clients.js');
-const clientsHistoryRouter = require('./routes/clients_history.js');
+const generalRouter = require('./routes/general.routes.js');
+const clientsRouter = require('./routes/clients.routes.js');
+const clientsHistoryRouter = require('./routes/clients_history.routes.js');
 
 const cron = require('./services/cronPing');
 cron;
@@ -14,7 +14,7 @@ cron;
 app.use(cors());
 app.use(express.json());
 
-app.use('/api/', indexRouter);
+app.use('/api/', generalRouter);
 app.use('/api/clients/', clientsRouter);
 app.use('/api/clients/history/', clientsHistoryRouter);
 
