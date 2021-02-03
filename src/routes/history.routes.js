@@ -1,7 +1,7 @@
 const express = require("express");
 var router = express.Router();
 
-var clientsHistoryController = require("../controllers/clients_history.controller");
+var clientsHistoryController = require("../controllers/history.controller");
 
 router.get("/", clientsHistoryController.getAll);
 
