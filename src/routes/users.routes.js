@@ -1,4 +1,5 @@
 const express = require("express");
+const { JWTAuth } = require("../services/jwt.validator");
 var router = express.Router();
 
 var usersController = require("../controllers/users.controller");
@@ -6,14 +7,14 @@ var usersController = require("../controllers/users.controller");
 
 router.post("/login", usersController.login);
 
-router.get("/", usersController.getAll);
+router.get("/", [JWTAuth], usersController.getAll);
 
-router.get("/:id", usersController.getSpecific);
+router.get("/:id", [JWTAuth], usersController.getSpecific);
 
-router.post("/", usersController.create);
+router.post("/", [JWTAuth], usersController.create);
 
-router.put("/:id", usersController.put);
+router.put("/:id", [JWTAuth], usersController.put);
 
-router.delete("/:id", usersController.delete);
+router.delete("/:id", [JWTAuth], usersController.delete);
 
 module.exports = router;
