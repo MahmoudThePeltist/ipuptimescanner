@@ -9,7 +9,7 @@ const clientsRouter = require('./routes/clients.routes.js');
 const historyRouter = require('./routes/history.routes.js');
 const usersRouter = require('./routes/users.routes.js');
 
-const cron = require('./services/cronPing');
+const cron = require('./services/ping.service');
 cron;
 
 app.use(cors());

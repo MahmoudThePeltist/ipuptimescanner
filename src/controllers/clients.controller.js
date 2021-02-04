@@ -1,4 +1,4 @@
-var knex = require("../services/knexConnection");
+var knex = require("../services/knex.service");
 
 exports.getAll = (req, res) => {
   knex("clients").then((rows) => res.status(200).json(rows));

@@ -1,4 +1,4 @@
-var knex = require("../services/knexConnection");
+var knex = require("../services/knex.service");
 var bcrypt = require('bcryptjs');
 var jwt = require('jsonwebtoken');
 const config = require("../../config");
@@ -69,7 +69,7 @@ exports.getAll = (req, res) => {
                 let authenticated = validatePassword(auth_data.password, user[0].password);
     
                 if(authenticated) {
-                    token = jwt.sign({id: user.id},  config.secret, {expiresIn: "10d"});
+                    token = jwt.sign({id: user[0].id},  config.secret, {expiresIn: "10d"});
                     res.status(200).json({ status: 200, data: user, token: token });
                 } else {
                     res.status(400).json({ status: 400, message: "Password is wrong." });
