@@ -1,4 +1,4 @@
-const knex = require("./knexConnection");
+const knex = require("./knex.service");
 const { performance } = require("perf_hooks");
 const cron = require("node-cron");
 const ping = require("ping");
