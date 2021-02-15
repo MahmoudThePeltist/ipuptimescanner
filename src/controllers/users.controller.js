@@ -57,27 +57,32 @@ exports.getAll = (req, res) => {
   };
   
   exports.login = (req, res) => {
+    
     auth_data = {
         email: req.body.email,
         password: req.body.password,
     }
 
-    try {
-        knex("users")
-            .where("email", auth_data.email)
-            .then((user) => {
-                let authenticated = validatePassword(auth_data.password, user[0].password);
-    
-                if(authenticated) {
-                    token = jwt.sign({id: user[0].id},  config.secret, {expiresIn: "10d"});
-                    res.status(200).json({ status: 200, data: user, token: token });
-                } else {
-                    res.status(400).json({ status: 400, message: "Password is wrong." });
-                }   
-            });
-    } catch (error) {
-        res.status(400).json({ status: 400, message: "No account exist" });
-    }
+    if(!!!auth_data.email || !!!auth_data.password){
+      res.status(422).json({ status: 422, message: "Missing inputs!" });
+    } else {  
+      try {
+      knex("users")
+        .where("email", auth_data.email)
+        .then((user) => {
+          let authenticated = validatePassword(auth_data.password, user[0].password);
+
+          if(authenticated) {
+            token = jwt.sign({id: user[0].id},  config.secret, {expiresIn: "10d"});
+            res.status(200).json({ status: 200, data: user, token: token });
+          } else {
+            res.status(400).json({ status: 400, message: "Password is wrong." });
+          }   
+        });
+      } catch (error) {
+          res.status(400).json({ status: 400, message: "No account exist" });
+      }
+    };
   };
 
 const generatePasswordHash = (password) => {    
