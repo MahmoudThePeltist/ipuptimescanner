@@ -4,6 +4,6 @@ var router = express.Router();
 
 var generalController = require('../controllers/general.controller');
 
-router.get('/routes', [JWTAuth], generalController.getRoutes);
+router.get('/routes', generalController.getRoutes);
 
 module.exports = router;
