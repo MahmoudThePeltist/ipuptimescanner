@@ -70,7 +70,8 @@ exports.getAll = (req, res) => {
       knex("users")
         .where("email", auth_data.email)
         .then((user) => {
-          let authenticated = validatePassword(auth_data.password, user[0].password);
+          console.log("user data: ", user);
+          let authenticated = validatePassword(auth_data.password, user[0]?.password);
 
           if(authenticated) {
             token = jwt.sign({id: user[0].id},  config.secret, {expiresIn: "10d"});

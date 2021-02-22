@@ -28,3 +28,4 @@ app.use('/api/users/', usersRouter);
 app.listen(port, () => {
     console.log(`IPUPTIMESCANNER is active on http://localhost:${port}`);
 })
+// app.listen(port, '192.168.1.122')
