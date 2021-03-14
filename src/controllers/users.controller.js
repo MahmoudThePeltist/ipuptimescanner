@@ -70,7 +70,12 @@ exports.getAll = (req, res) => {
       knex("users")
         .where("email", auth_data.email)
         .then((user) => {
-          console.log("user data: ", user);
+          console.log("user data: ",auth_data, user);
+          
+          if(!user[0]?.password){
+            res.status(422).json({ status: 422, message: "User not found" });
+          }
+          
           let authenticated = validatePassword(auth_data.password, user[0]?.password);
 
           if(authenticated) {
