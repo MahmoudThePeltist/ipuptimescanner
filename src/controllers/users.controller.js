@@ -88,12 +88,20 @@ exports.getAll = (req, res) => {
 
 const generatePasswordHash = (password) => {    
     const saltRounds = 10;
-    var salt = bcrypt.genSaltSync(saltRounds);
-    var hash = bcrypt.hashSync(password, salt);
-    return hash;
+    try {
+      var salt = bcrypt.genSaltSync(saltRounds);
+      return bcrypt.hashSync(password, salt);
+    } catch(e) {
+      console.warn("generatePasswordHash() ", e);
+      return false;
+    }
 }
 
 const validatePassword = (password, hashedPassword) => {
-    let res = bcrypt.compareSync(password, hashedPassword);
-    return res;
+  try {
+    return bcrypt.compareSync(password, hashedPassword);
+  } catch(e) {
+    console.warn("validatePassword() ", e);
+    return false;
+  }
 }
