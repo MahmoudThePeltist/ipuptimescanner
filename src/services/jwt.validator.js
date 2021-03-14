@@ -5,6 +5,7 @@ const knex = require("./knex.service");
 const config = require("../../config");
 
 let verifyJWT = (token, next) => {
+  console.log("verifyJWT: ", token);
   try {
     var decoded = jwt.verify(token, config.secret);
     return { ...decoded, expired: false };
@@ -19,6 +20,7 @@ let verifyJWT = (token, next) => {
 };
 
 exports.JWTAuth = async (req, res, next) => {
+  console.log("exports.JWTAuth: ", req);
   let token = undefined;
   try {
     token = req.headers["x-authorization"];
@@ -27,9 +29,11 @@ exports.JWTAuth = async (req, res, next) => {
   }
   if (token) {
     req.token = token;
+    console.log("jwt auth: ", req.token);
     try {
       const decodedToken = verifyJWT(req.token, next);
 
+      console.log("decodedToken: ", decodedToken);
       !decodedToken && res.status(403).json({status: 403, message: "Error: User does not have a valid token"});
 
       if (decodedToken.expired) {
