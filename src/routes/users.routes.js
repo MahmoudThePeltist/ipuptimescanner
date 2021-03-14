@@ -11,8 +11,7 @@ router.get("/", [JWTAuth], usersController.getAll);
 
 router.get("/:id", [JWTAuth], usersController.getSpecific);
 
-router.post("/", [JWTAuth], usersController.create);
-
+router.post("/",  usersController.create);
 router.put("/:id", [JWTAuth], usersController.put);
 
 router.delete("/:id", [JWTAuth], usersController.delete);
