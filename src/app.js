@@ -11,7 +11,7 @@ const usersRouter = require('./routes/users.routes.js');
 
 const cron = require('./services/ping.service');
 
-const fetchCPEsFromSector = require('./services/cpe_fetch.service');
+const getCPEsAndBuild = require('./services/cpe_fetch.service');
 
 cron;
 
@@ -23,7 +23,7 @@ app.use('/api/clients/', clientsRouter);
 app.use('/api/history/', historyRouter);
 app.use('/api/users/', usersRouter);
 
-fetchCPEsFromSector('192.168.1.188', '8080', '10.50.8.104', '300');
+getCPEsAndBuild();
 
 // app.use((req, res, error, next) => {
 //     // next(createError(404));
